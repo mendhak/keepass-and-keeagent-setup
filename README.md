@@ -99,7 +99,7 @@ Add the following line to it - it will set the `SSH_AUTH_SOCK` environment varia
 
     export SSH_AUTH_SOCK="C:\Temp\cyglockfile"
 
-Close and reopen Git Bash.  Then try your test again.  If it works, you should see a message from Github, and a notification that a key was used.  
+Close and reopen Git Bash.  Then try your test again.  If it works, you should see a message from Github, and a notification that a key was used.  If it doesn't work, try again with the other file (syslockfile) instead.  
 
 ![keeagent9](assets/keepass-ssh-key-9.png)
 
