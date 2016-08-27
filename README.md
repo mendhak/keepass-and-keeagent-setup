@@ -46,7 +46,7 @@ _____
 
 ## Store your keys
 
-Continuing with the Github example, either edit your existing Github entry or create an empty entry, no matter. 
+Continuing with the Github example, create a new entry to hold the key.  If the private key has a password on it, enter it in the password field. 
 
 
 ![keeagent1](assets/keepass-ssh-key-1.png)
@@ -105,10 +105,6 @@ Close and reopen Git Bash.  Then try your test again.  If it works, you should s
 
 Try out a few `git` commands - `git clone` (with the non-http URL), `git fetch` and `git push`.  In each case it should use the key and show you a notification.
 
-
-### Private keys with passwords
-
-If your private key had a password on it, KeeAgent will use the password in the password field to unlock it.  In such a case it's better to have created a new entry just for the SSH key instead of using an existing one. 
 
 ### Don't load every key
 
