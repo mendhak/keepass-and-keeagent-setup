@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>How to use KeePass with KeeAgent to serve SSH keys by mendhak</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">How to use KeePass with KeeAgent to serve SSH keys</h1>
+        <p class="header">Security setup instructions for using KeePass with KeeAgent for SSH keypairs</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/mendhak/keepass-and-keeagent-setup/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/mendhak/keepass-and-keeagent-setup/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/mendhak/keepass-and-keeagent-setup">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/mendhak">mendhak</a></p>
+
+
+      </header>
+      <section>
+        <h1>
+<a id="using-keepass-with-keeagent" class="anchor" href="#using-keepass-with-keeagent" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Using KeePass with KeeAgent</h1>
+
+<p>While KeePass is generally used for storing credentials, it can also be used to store SSH keys as well as <em>serve</em> those SSH keys when applications need it.</p>
+
+<p>It's a good idea to use SSH keys when connecting to remote servers rather than username/passwords.  It's also a good practice to generate a keypair for each server you connect to - including when performing remote <code>git</code> operations.  </p>
+
+<p>Over time though, the number of keys you need to manage and remember can grow.  There are various ways to solve this, including SSH <code>.config</code> files.  KeePass is one way to go about this, by using KeePass and the KeeAgent plugin, we can use the KeePass database as a container for our keys and have it serve when needed.  This has the advantage that the SSH keys are synced with the KeePass database.      </p>
+
+<h2>
+<a id="install-things" class="anchor" href="#install-things" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install things</h2>
+
+<h3>
+<a id="keepass" class="anchor" href="#keepass" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>KeePass</h3>
+
+<p>Ensure <a href="http://keepass.info/download.html">KeePass Professional Edition</a> is installed.  You may want to consider using the <em>portable</em> edition, and syncing the entire KeePass installation along with your <code>.kdbx</code> across your machines.  For example, you could have the KeePass installation in your Google Drive, which includes config file and a plugins folder.  This way, your settings and plugins will carry across machines, reducing the setup required. </p>
+
+<p><img src="assets/keepass-in-gdrive.png" alt="gdrive">  </p>
+
+<h3>
+<a id="git-bash" class="anchor" href="#git-bash" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Git Bash</h3>
+
+<p>Git Bash isn't just the <code>git</code> command as most people use it, it's actually a collection of very useful and familiar utilities such as <code>grep</code>, <code>vi</code>, <code>awk</code>, <code>cut</code>, but most importantly <code>ssh</code> and <code>scp</code>.  Have a look at <em>C:\Program Files\Git\usr\bin</em> to get an idea of what you can use.</p>
+
+<p><img src="assets/git-bin-folder.png" alt="git-bing"></p>
+
+<p>When installing <a href="https://git-scm.com/downloads">Git Bash</a>, I'd recommend the options for using Git from the Windows Command Prompt, and line endings being 'as is'.</p>
+
+<h3>
+<a id="keeagent" class="anchor" href="#keeagent" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>KeeAgent</h3>
+
+<p>Install <a href="http://lechnology.com/software/keeagent/#Download">KeeAgent</a> - it's a simple matter of placing the <code>KeeAgent.plgx</code> file in the KeePass plugins folder.</p>
+
+<p><img src="assets/keeagent-install-plgx.png" alt="plgx"></p>
+
+<p>You will need to reopen KeePass for the plugin to appear.  </p>
+
+<h3>
+<a id="add-keys-to-your-remote-git-account" class="anchor" href="#add-keys-to-your-remote-git-account" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Add keys to your remote Git account</h3>
+
+<p>A common use case for SSH is accessing your Github or Bitbucket account over <code>ssh</code> instead of <code>http</code>.   </p>
+
+<p><img src="assets/github-clone.png" alt="gitclone"></p>
+
+<p>As a prerequisite, <a href="https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/">add your public key</a> to your account.</p>
+
+<p><img src="assets/ssh-key-paste.png" alt="githubssh"></p>
+
+<hr>
+
+<h2>
+<a id="store-your-keys" class="anchor" href="#store-your-keys" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Store your keys</h2>
+
+<p>Continuing with the Github example, create a new entry to hold the key.  If the private key has a password on it, enter it in the password field. </p>
+
+<p><img src="assets/keepass-ssh-key-1.png" alt="keeagent1"></p>
+
+<p>Now for the keys.  Click on the <em>Advanced</em> tab and choose to attach files. </p>
+
+<p><img src="assets/keepass-ssh-key-2.png" alt="keeagent2"></p>
+
+<p>Find your SSH keypair for your remote server and attach them</p>
+
+<p><img src="assets/keepass-ssh-key-3.png" alt="keeagent3"></p>
+
+<h3>
+<a id="load-your-key-with-keeagent" class="anchor" href="#load-your-key-with-keeagent" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Load your key with KeeAgent</h3>
+
+<p>Click on the KeeAgent tab. Check the <em>Allow KeeAgent to use this entry</em> option.  From the <em>Attachment</em> option, choose the private key that you attached just a while ago.</p>
+
+<p>You should see the <em>Key Info</em> section populate with some information about your keys.  </p>
+
+<p><img src="assets/keepass-ssh-key-4.png" alt="keeagent4"></p>
+
+<p>At this point KeeAgent knows about your key but hasn't loaded it.  For the key to be loaded, either reopen the KeePass database, or double click on the <em>SSH Key Status</em> column to change the status from <em>Not Loaded</em> to <em>Loaded</em></p>
+
+<p><img src="assets/keepass-ssh-key-5.png" alt="keeagent5"></p>
+
+<p>Another way to check which keys are loaded is by <em>Tools</em> &gt; <em>KeeAgent</em></p>
+
+<p><img src="assets/keepass-ssh-key-6.png" alt="keeagent6"></p>
+
+<h3>
+<a id="tell-git-bash-to-use-keeagent" class="anchor" href="#tell-git-bash-to-use-keeagent" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tell Git Bash to use KeeAgent</h3>
+
+<p>Although KeeAgent is now ready to serve the keys, Git Bash needs to be told about it.  If you open Git Bash now and try a quick test, you should get an error.</p>
+
+<blockquote>
+<p>$ ssh -T <a href="mailto:git@github.com">git@github.com</a><br>
+Permission denied (publickey).</p>
+</blockquote>
+
+<p>Go back to KeePass, and click <em>Tools</em> &gt; <em>Options...</em> and then click the <em>KeeAgent</em> tab. Choose to <em>Show a notification...</em>, and more importantly check the boxes in the <em>Cygwin/MSYS Integration</em> area.  Add a path such as <em>C:\Temp\cygsocket</em> and <em>C:\Temp\syssocket</em> or any arbitrary file name you want.  This will create socket files, which is a Unix concept - it allows applications to talk to each other through a file.  In this case, Git Bash will communicate with KeePass through one of these two socket files.</p>
+
+<p><img src="assets/keepass-ssh-key-7.png" alt="keeagent7">  </p>
+
+<p>Again, close and reopen KeePass, then head over to <em>C:\Temp</em> or whichever path you specified.  You should see your socket files there. </p>
+
+<p><img src="assets/keepass-ssh-key-8.png" alt="keeagent8">  </p>
+
+<p>Using your text editor, or even <code>vi</code> in Git Bash, edit/create the <code>~/.bashrc</code> file.  This would correspond to <em>C:\users\username.bashrc</em> </p>
+
+<pre><code>vi ~/.bashrc
+</code></pre>
+
+<p>Add the following line to it - it will set the <code>SSH_AUTH_SOCK</code> environment variable, pointing at the socket file.  This is what Git Bash needs to know. </p>
+
+<pre><code>export SSH_AUTH_SOCK="C:\Temp\cyglockfile"
+</code></pre>
+
+<p>Close and reopen Git Bash.  Then try your test again.  If it works, you should see a message from Github, and a notification that a key was used.  If it doesn't work, try again with the other file (syslockfile) instead.  </p>
+
+<p><img src="assets/keepass-ssh-key-9.png" alt="keeagent9"></p>
+
+<p>Try out a few <code>git</code> commands - <code>git clone</code> (with the non-http URL), <code>git fetch</code> and <code>git push</code>.  In each case it should use the key and show you a notification.</p>
+
+<h3>
+<a id="dont-load-every-key" class="anchor" href="#dont-load-every-key" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Don't load every key</h3>
+
+<p>Back in the load step, we left the <em>Add key to agent when database is opened/unlocked</em> option checked. </p>
+
+<p><img src="assets/keepass-ssh-key-10.png" alt="keeagent10"></p>
+
+<p>This tells KeeAgent to load this key up whenever this KeePass database is opened.  But if you have around 5 or more keys loaded, your authentication may fail.  This is because SSH Agents work by trying to use every loaded key until it finds one that works.  Many SSH servers don't like this and will close the connection if it sees around 5 or more attempts.  </p>
+
+<p>You should only check the above option for frequent use keys, and a Git server key is a good example.  </p>
+
+<p>For occasional use keys, you can double click the <em>SSH Key Status</em> column to load them only when you're about to use it, and even unload a few others.</p>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
