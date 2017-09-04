@@ -91,7 +91,7 @@ Again, close and reopen KeePass, then head over to *C:\Temp* or whichever path y
 
 ![keeagent8](assets/keepass-ssh-key-8.png)  
 
-Using your text editor, or even `vi` in Git Bash, edit/create the `~/.bashrc` file.  This would correspond to *C:\users\username\.bashrc* 
+Using your text editor, or even `vi` in Git Bash, edit/create the `~/.bashrc` file.  This would correspond to *C:\users\username\\.bashrc* 
 
     vi ~/.bashrc
 
