@@ -119,4 +119,3 @@ You should only check the above option for frequent use keys, and a Git server k
 For occasional use keys, you can double click the *SSH Key Status* column to load them only when you're about to use it, and even unload a few others.
 
 
-.
